@@ -118,6 +118,12 @@ function run_model() {
   # Start benchmarking
   eval ${CMD} 2>&1 | tee ${LOGFILE}
 
+  # Check benchmark return code, exit if benchmark failed
+  if [ ${PIPESTATUS[0]} -ne 0 ] ; then
+    echo "Benchmark failed, please consult the logs above for more information."
+    exit 1
+  fi
+
   if [ ${VERBOSE} == "True" ]; then
     echo "PYTHONPATH: ${PYTHONPATH}" | tee -a ${LOGFILE}
     echo "RUNCMD: ${CMD} " | tee -a ${LOGFILE}

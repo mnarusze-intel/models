@@ -403,11 +403,7 @@ class LaunchBenchmark(base_benchmark_util.BaseBenchmarkUtil):
 
     def _launch_command(self, run_cmd):
         """runs command that runs the start script in a container or on bare metal and exits on ctrl c"""
-        p = subprocess.Popen(run_cmd, preexec_fn=os.setsid)
-        try:
-            p.communicate()
-        except KeyboardInterrupt:
-            os.killpg(os.getpgid(p.pid), signal.SIGKILL)
+        subprocess.check_call(run_cmd, preexec_fn=os.setsid)
 
 
 if __name__ == "__main__":
